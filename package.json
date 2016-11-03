@@ -1,0 +1,65 @@
+{
+  "name": "paymentjs",
+  "version": "0.1.0",
+  "description": "A framework agnostic, multi-gateway payment processing library for Node.js, Inspired by Omnipay for PHP",
+  "main": "lib/index.js",
+  "babel": {
+    "presets": [
+      "es2015",
+      "stage-0"
+    ]
+  },
+  "ava": {
+    "files": [
+      "test/**/*.test.{js,es}",
+      "!test/__lib__/**/*"
+    ],
+    "source": [
+      "**/*.{js,jsx,es}",
+      "!build/**/*"
+    ],
+    "require": [
+      "babel-register",
+      "babel-polyfill"
+    ],
+    "babel": "inherit"
+  },
+  "scripts": {
+    "compile": "babel --presets es2015,stage-0 -d lib/ src/",
+    "prepublish": "npm run compile",
+    "test": "ava"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dianpou/paymentjs.git"
+  },
+  "keywords": [
+    "Payment",
+    "Gateway",
+    "Alipay",
+    "Stripe",
+    "Paypal"
+  ],
+  "author": "Garbin Huang <garbinh@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/dianpou/paymentjs/issues"
+  },
+  "homepage": "https://github.com/dianpou/paymentjs#readme",
+  "devDependencies": {
+    "ava": "^0.16.0",
+    "babel": "^6.5.2",
+    "babel-cli": "^6.18.0",
+    "babel-preset-es2015": "^6.18.0",
+    "babel-preset-stage-0": "^6.16.0",
+    "chai": "^3.5.0"
+  },
+  "dependencies": {
+    "axios": "^0.15.2",
+    "blueimp-md5": "^2.5.0",
+    "ejs": "^2.5.2",
+    "lodash": "^4.16.6",
+    "qs": "^6.3.0",
+    "stripe": "^4.12.0"
+  }
+}
