@@ -4,6 +4,8 @@ import qs from 'qs'
 import _ from 'lodash'
 import md5 from 'blueimp-md5'
 import request from 'axios'
+import https from 'https'
+import fs from 'fs'
 
 function sign(params, options) {
     params = _.omit(params, ['sign', 'sign_type']);
@@ -18,7 +20,14 @@ function sign(params, options) {
 }
 
 export class AlipayResponse extends Response {
+  get queryUrl(){
+    return {
+      'https': 'https://mapi.alipay.com/gateway.do?service=notify_verify&',
+      'http': 'http://notify.alipay.com/trade/notify_query.do?'
+    }
+  }
   async isSuccess(){
+
     if (!this.body) {
       this.errors = 'body is empty';
       return false;
@@ -32,10 +41,18 @@ export class AlipayResponse extends Response {
       this.errors = 'sign in is invalid';
       return false;
     }
-    let response = await request.get(`http://notify.alipay.com/trade/notify_query.do?${qs.stringify({
+    let options;
+    if (this.config.cacert) {
+      options = {
+        httpsAgent: https.Agent({
+          ca: fs.readFileSync(this.config.cacert)
+        })
+      }
+    }
+    let response = await request.get(`${this.queryUrl[this.config.transport]}?${qs.stringify({
       partner: this.config.partner,
-      notify_id: this.body.notify_id
-    })}` );
+      notify_id: this.body.notify_id,
+    })}`, options);
     if (response.data != 'true') {
       this.errors = 'notify is not sent by alipay';
       return false;
