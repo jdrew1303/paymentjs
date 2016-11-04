@@ -1,6 +1,10 @@
 export default class Order {
   constructor(attrs) {
-    this.attributes = attrs;
+    this.attributes = Object.assign({
+      title: 'Order from PaymentJS',
+      description: 'Order from PaymentJS description',
+      currency: 'cny',
+    }, attrs);
   }
   get id(){
     return this.attributes.id;
@@ -8,8 +12,11 @@ export default class Order {
   get title(){
     return this.attributes.title;
   }
-  get contents(){
-    return this.attributes.contents;
+  get description(){
+    return this.attributes.description;
+  }
+  get items(){
+    return this.attributes.items;
   }
   get amount(){
     return this.attributes.amount;

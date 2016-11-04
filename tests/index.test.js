@@ -1,6 +1,5 @@
 import { Alipay, Stripe } from '../src/gateways'
 import Order from '../src/order'
-
 async function alipay() {
   const gateway = new Alipay({
     partner: '123',
@@ -41,7 +40,7 @@ async function alipay() {
 }
 async function stripe() {
   let gateway = new Stripe({
-    key: 'sk_test_LPIE20HyBixCrxjCpwC9zLlI'
+    key: '__KEY__'
   });
   let card = await gateway.stripe.tokens.create({
     card: {
